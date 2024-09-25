@@ -1,4 +1,4 @@
-# TON
+# Solana
 
 ## Setup
 
