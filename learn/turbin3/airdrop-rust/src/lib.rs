@@ -17,7 +17,7 @@ mod tests {
         str::FromStr,
     };
 
-    use crate::programs::turbin3_prereq::{CompleteArgs, Turbin3PrereqProgram};
+    use crate::programs::turbin3_prereq::{CompleteArgs, Turbin3PrereqProgram, UpdateArgs};
 
     const RPC_URL: &str = "https://api.devnet.solana.com";
 
@@ -172,6 +172,41 @@ mod tests {
             .expect("Failed to get recent blockhash");
 
         let transaction = Turbin3PrereqProgram::complete(
+            &[&signer.pubkey(), &prereq, &system_program::id()],
+            &args,
+            Some(&signer.pubkey()),
+            &[&signer],
+            blockhash,
+        );
+
+        let signature = rpc_client
+            .send_and_confirm_transaction(&transaction)
+            .expect("Failed to send transaction");
+
+        println!(
+            "Success! TX: https://explorer.solana.com/tx/{}/?cluster=devnet",
+            signature
+        );
+    }
+
+    #[test]
+    fn update_enroll() {
+        let rpc_client = RpcClient::new(RPC_URL);
+        let signer =
+            read_keypair_file("turbin3-wallet-key.json").expect("Couldn't find wallet file");
+        let prereq = Turbin3PrereqProgram::derive_program_address(&[
+            b"prereq",
+            signer.pubkey().to_bytes().as_ref(),
+        ]);
+        let args = UpdateArgs {
+            github: b"nikitavoloboev".to_vec(),
+        };
+
+        let blockhash = rpc_client
+            .get_latest_blockhash()
+            .expect("Failed to get recent blockhash");
+
+        let transaction = Turbin3PrereqProgram::update(
             &[&signer.pubkey(), &prereq, &system_program::id()],
             &args,
             Some(&signer.pubkey()),
