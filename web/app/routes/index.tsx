@@ -1,13 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/")({
-  component: Home,
-})
-
-function Home() {
+function RouteComponent() {
   return (
-    <div className="p-2">
-      <h3>Welcome Home!!!</h3>
-    </div>
+    <>
+      <div>
+        todo: connect wallet with https://github.com/anza-xyz/wallet-adapter
+      </div>
+      <div>todo: split tx into multiple addresses (2 and 4)</div>
+    </>
   )
 }
+
+export const Route = createFileRoute("/")({
+  component: RouteComponent,
+})
