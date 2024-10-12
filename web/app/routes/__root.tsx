@@ -91,7 +91,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             Home
           </Link>{" "}
           <Link
-            to="/"
+            to="/multi-tx"
             activeProps={{
               className: "font-bold",
             }}
