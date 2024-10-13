@@ -16,6 +16,7 @@ import { Route as RedirectImport } from './routes/redirect'
 import { Route as PostsImport } from './routes/posts'
 import { Route as MultiTxImport } from './routes/multi-tx'
 import { Route as DeferredImport } from './routes/deferred'
+import { Route as CoinImport } from './routes/coin'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users.index'
@@ -51,6 +52,11 @@ const MultiTxRoute = MultiTxImport.update({
 
 const DeferredRoute = DeferredImport.update({
   path: '/deferred',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoinRoute = CoinImport.update({
+  path: '/coin',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -120,6 +126,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/coin': {
+      id: '/coin'
+      path: '/coin'
+      fullPath: '/coin'
+      preLoaderRoute: typeof CoinImport
       parentRoute: typeof rootRoute
     }
     '/deferred': {
@@ -270,6 +283,7 @@ const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof LayoutLayout2RouteWithChildren
+  '/coin': typeof CoinRoute
   '/deferred': typeof DeferredRoute
   '/multi-tx': typeof MultiTxRoute
   '/posts': typeof PostsRouteWithChildren
@@ -287,6 +301,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof LayoutLayout2RouteWithChildren
+  '/coin': typeof CoinRoute
   '/deferred': typeof DeferredRoute
   '/multi-tx': typeof MultiTxRoute
   '/redirect': typeof RedirectRoute
@@ -303,6 +318,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_layout': typeof LayoutRouteWithChildren
+  '/coin': typeof CoinRoute
   '/deferred': typeof DeferredRoute
   '/multi-tx': typeof MultiTxRoute
   '/posts': typeof PostsRouteWithChildren
@@ -323,6 +339,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/coin'
     | '/deferred'
     | '/multi-tx'
     | '/posts'
@@ -339,6 +356,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/coin'
     | '/deferred'
     | '/multi-tx'
     | '/redirect'
@@ -353,6 +371,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_layout'
+    | '/coin'
     | '/deferred'
     | '/multi-tx'
     | '/posts'
@@ -372,6 +391,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LayoutRoute: typeof LayoutRouteWithChildren
+  CoinRoute: typeof CoinRoute
   DeferredRoute: typeof DeferredRoute
   MultiTxRoute: typeof MultiTxRoute
   PostsRoute: typeof PostsRouteWithChildren
@@ -383,6 +403,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LayoutRoute: LayoutRouteWithChildren,
+  CoinRoute: CoinRoute,
   DeferredRoute: DeferredRoute,
   MultiTxRoute: MultiTxRoute,
   PostsRoute: PostsRouteWithChildren,
@@ -405,6 +426,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_layout",
+        "/coin",
         "/deferred",
         "/multi-tx",
         "/posts",
@@ -421,6 +443,9 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/_layout-2"
       ]
+    },
+    "/coin": {
+      "filePath": "coin.tsx"
     },
     "/deferred": {
       "filePath": "deferred.tsx"
