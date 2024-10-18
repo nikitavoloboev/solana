@@ -138,15 +138,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           >
             Home
           </Link>{" "}
-          <Link
-            to="/coin"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Coin
-          </Link>{" "}
         </div>
         <hr />
         {children}
