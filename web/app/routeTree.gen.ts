@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as WalletConnectImport } from './routes/wallet-connect'
 import { Route as UsersImport } from './routes/users'
 import { Route as RedirectImport } from './routes/redirect'
 import { Route as PostsImport } from './routes/posts'
@@ -29,6 +30,11 @@ import { Route as LayoutLayout2LayoutBImport } from './routes/_layout/_layout-2/
 import { Route as LayoutLayout2LayoutAImport } from './routes/_layout/_layout-2/layout-a'
 
 // Create/Update Routes
+
+const WalletConnectRoute = WalletConnectImport.update({
+  path: '/wallet-connect',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const UsersRoute = UsersImport.update({
   path: '/users',
@@ -170,6 +176,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersImport
       parentRoute: typeof rootRoute
     }
+    '/wallet-connect': {
+      id: '/wallet-connect'
+      path: '/wallet-connect'
+      fullPath: '/wallet-connect'
+      preLoaderRoute: typeof WalletConnectImport
+      parentRoute: typeof rootRoute
+    }
     '/_layout/_layout-2': {
       id: '/_layout/_layout-2'
       path: ''
@@ -289,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/posts': typeof PostsRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
+  '/wallet-connect': typeof WalletConnectRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
@@ -305,6 +319,7 @@ export interface FileRoutesByTo {
   '/deferred': typeof DeferredRoute
   '/multi-tx': typeof MultiTxRoute
   '/redirect': typeof RedirectRoute
+  '/wallet-connect': typeof WalletConnectRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
   '/posts': typeof PostsIndexRoute
@@ -324,6 +339,7 @@ export interface FileRoutesById {
   '/posts': typeof PostsRouteWithChildren
   '/redirect': typeof RedirectRoute
   '/users': typeof UsersRouteWithChildren
+  '/wallet-connect': typeof WalletConnectRoute
   '/_layout/_layout-2': typeof LayoutLayout2RouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
@@ -345,6 +361,7 @@ export interface FileRouteTypes {
     | '/posts'
     | '/redirect'
     | '/users'
+    | '/wallet-connect'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts/'
@@ -360,6 +377,7 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/multi-tx'
     | '/redirect'
+    | '/wallet-connect'
     | '/posts/$postId'
     | '/users/$userId'
     | '/posts'
@@ -377,6 +395,7 @@ export interface FileRouteTypes {
     | '/posts'
     | '/redirect'
     | '/users'
+    | '/wallet-connect'
     | '/_layout/_layout-2'
     | '/posts/$postId'
     | '/users/$userId'
@@ -397,6 +416,7 @@ export interface RootRouteChildren {
   PostsRoute: typeof PostsRouteWithChildren
   RedirectRoute: typeof RedirectRoute
   UsersRoute: typeof UsersRouteWithChildren
+  WalletConnectRoute: typeof WalletConnectRoute
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
 }
 
@@ -409,6 +429,7 @@ const rootRouteChildren: RootRouteChildren = {
   PostsRoute: PostsRouteWithChildren,
   RedirectRoute: RedirectRoute,
   UsersRoute: UsersRouteWithChildren,
+  WalletConnectRoute: WalletConnectRoute,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
 }
 
@@ -432,6 +453,7 @@ export const routeTree = rootRoute
         "/posts",
         "/redirect",
         "/users",
+        "/wallet-connect",
         "/posts/$postId/deep"
       ]
     },
@@ -469,6 +491,9 @@ export const routeTree = rootRoute
         "/users/$userId",
         "/users/"
       ]
+    },
+    "/wallet-connect": {
+      "filePath": "wallet-connect.tsx"
     },
     "/_layout/_layout-2": {
       "filePath": "_layout/_layout-2.tsx",

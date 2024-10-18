@@ -109,13 +109,14 @@ function RootComponent() {
 
   return (
     <RootDocument>
-      <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets} autoConnect>
-          <WalletMultiButton />
-          <WalletDisconnectButton />
-          <Outlet />
-        </WalletProvider>
-      </ConnectionProvider>
+      {/* TODO: commenting for now as trying to integrate https://github.com/jup-ag/terminal as wallet connect */}
+      {/* <ConnectionProvider endpoint={endpoint}> */}
+      {/* <WalletProvider wallets={wallets} autoConnect> */}
+      {/* <WalletMultiButton />
+          <WalletDisconnectButton /> */}
+      <Outlet />
+      {/* </WalletProvider> */}
+      {/* </ConnectionProvider> */}
     </RootDocument>
   )
 }

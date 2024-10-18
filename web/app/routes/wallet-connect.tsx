@@ -6,12 +6,11 @@ function RouteComponent() {
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false)
   return (
     <>
-      {/* TODO: breaking, is not same as in https://github.com/jup-ag/terminal */}
       <WalletButton setIsWalletModalOpen={setIsWalletModalOpen} />
     </>
   )
 }
 
-export const Route = createFileRoute("/")({
-  component: RouteComponent,
+export const Route = createFileRoute("/wallet-connect")({
+  component: () => <RouteComponent />,
 })
