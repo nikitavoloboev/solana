@@ -1,13 +1,5 @@
-# Solana
+# [Solana](https://solana.nikiv.dev)
 
-## Setup
+## Web
 
-```
-bun i
-```
-
-## Run
-
-```
-bun dev
-```
+See [web/readme.md](web/readme.md)
