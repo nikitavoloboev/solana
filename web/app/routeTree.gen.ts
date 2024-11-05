@@ -20,9 +20,7 @@ import { Route as DeferredImport } from './routes/deferred'
 import { Route as CoinImport } from './routes/coin'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as IndexImport } from './routes/index'
-import { Route as UsersIndexImport } from './routes/users.index'
 import { Route as PostsIndexImport } from './routes/posts.index'
-import { Route as UsersUserIdImport } from './routes/users.$userId'
 import { Route as PostsPostIdImport } from './routes/posts.$postId'
 import { Route as LayoutLayout2Import } from './routes/_layout/_layout-2'
 import { Route as PostsPostIdDeepImport } from './routes/posts_.$postId.deep'
@@ -76,19 +74,9 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UsersIndexRoute = UsersIndexImport.update({
-  path: '/',
-  getParentRoute: () => UsersRoute,
-} as any)
-
 const PostsIndexRoute = PostsIndexImport.update({
   path: '/',
   getParentRoute: () => PostsRoute,
-} as any)
-
-const UsersUserIdRoute = UsersUserIdImport.update({
-  path: '/$userId',
-  getParentRoute: () => UsersRoute,
 } as any)
 
 const PostsPostIdRoute = PostsPostIdImport.update({
@@ -197,26 +185,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdImport
       parentRoute: typeof PostsImport
     }
-    '/users/$userId': {
-      id: '/users/$userId'
-      path: '/$userId'
-      fullPath: '/users/$userId'
-      preLoaderRoute: typeof UsersUserIdImport
-      parentRoute: typeof UsersImport
-    }
     '/posts/': {
       id: '/posts/'
       path: '/'
       fullPath: '/posts/'
       preLoaderRoute: typeof PostsIndexImport
       parentRoute: typeof PostsImport
-    }
-    '/users/': {
-      id: '/users/'
-      path: '/'
-      fullPath: '/users/'
-      preLoaderRoute: typeof UsersIndexImport
-      parentRoute: typeof UsersImport
     }
     '/_layout/_layout-2/layout-a': {
       id: '/_layout/_layout-2/layout-a'
@@ -281,18 +255,6 @@ const PostsRouteChildren: PostsRouteChildren = {
 
 const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
 
-interface UsersRouteChildren {
-  UsersUserIdRoute: typeof UsersUserIdRoute
-  UsersIndexRoute: typeof UsersIndexRoute
-}
-
-const UsersRouteChildren: UsersRouteChildren = {
-  UsersUserIdRoute: UsersUserIdRoute,
-  UsersIndexRoute: UsersIndexRoute,
-}
-
-const UsersRouteWithChildren = UsersRoute._addFileChildren(UsersRouteChildren)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof LayoutLayout2RouteWithChildren
@@ -301,12 +263,10 @@ export interface FileRoutesByFullPath {
   '/multi-tx': typeof MultiTxRoute
   '/posts': typeof PostsRouteWithChildren
   '/redirect': typeof RedirectRoute
-  '/users': typeof UsersRouteWithChildren
+  '/users': typeof UsersRoute
   '/wallet-connect': typeof WalletConnectRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
-  '/users/': typeof UsersIndexRoute
   '/layout-a': typeof LayoutLayout2LayoutARoute
   '/layout-b': typeof LayoutLayout2LayoutBRoute
   '/posts/$postId/deep': typeof PostsPostIdDeepRoute
@@ -319,11 +279,10 @@ export interface FileRoutesByTo {
   '/deferred': typeof DeferredRoute
   '/multi-tx': typeof MultiTxRoute
   '/redirect': typeof RedirectRoute
+  '/users': typeof UsersRoute
   '/wallet-connect': typeof WalletConnectRoute
   '/posts/$postId': typeof PostsPostIdRoute
-  '/users/$userId': typeof UsersUserIdRoute
   '/posts': typeof PostsIndexRoute
-  '/users': typeof UsersIndexRoute
   '/layout-a': typeof LayoutLayout2LayoutARoute
   '/layout-b': typeof LayoutLayout2LayoutBRoute
   '/posts/$postId/deep': typeof PostsPostIdDeepRoute
@@ -338,13 +297,11 @@ export interface FileRoutesById {
   '/multi-tx': typeof MultiTxRoute
   '/posts': typeof PostsRouteWithChildren
   '/redirect': typeof RedirectRoute
-  '/users': typeof UsersRouteWithChildren
+  '/users': typeof UsersRoute
   '/wallet-connect': typeof WalletConnectRoute
   '/_layout/_layout-2': typeof LayoutLayout2RouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
-  '/users/$userId': typeof UsersUserIdRoute
   '/posts/': typeof PostsIndexRoute
-  '/users/': typeof UsersIndexRoute
   '/_layout/_layout-2/layout-a': typeof LayoutLayout2LayoutARoute
   '/_layout/_layout-2/layout-b': typeof LayoutLayout2LayoutBRoute
   '/posts/$postId/deep': typeof PostsPostIdDeepRoute
@@ -363,9 +320,7 @@ export interface FileRouteTypes {
     | '/users'
     | '/wallet-connect'
     | '/posts/$postId'
-    | '/users/$userId'
     | '/posts/'
-    | '/users/'
     | '/layout-a'
     | '/layout-b'
     | '/posts/$postId/deep'
@@ -377,11 +332,10 @@ export interface FileRouteTypes {
     | '/deferred'
     | '/multi-tx'
     | '/redirect'
+    | '/users'
     | '/wallet-connect'
     | '/posts/$postId'
-    | '/users/$userId'
     | '/posts'
-    | '/users'
     | '/layout-a'
     | '/layout-b'
     | '/posts/$postId/deep'
@@ -398,9 +352,7 @@ export interface FileRouteTypes {
     | '/wallet-connect'
     | '/_layout/_layout-2'
     | '/posts/$postId'
-    | '/users/$userId'
     | '/posts/'
-    | '/users/'
     | '/_layout/_layout-2/layout-a'
     | '/_layout/_layout-2/layout-b'
     | '/posts/$postId/deep'
@@ -415,7 +367,7 @@ export interface RootRouteChildren {
   MultiTxRoute: typeof MultiTxRoute
   PostsRoute: typeof PostsRouteWithChildren
   RedirectRoute: typeof RedirectRoute
-  UsersRoute: typeof UsersRouteWithChildren
+  UsersRoute: typeof UsersRoute
   WalletConnectRoute: typeof WalletConnectRoute
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
 }
@@ -428,7 +380,7 @@ const rootRouteChildren: RootRouteChildren = {
   MultiTxRoute: MultiTxRoute,
   PostsRoute: PostsRouteWithChildren,
   RedirectRoute: RedirectRoute,
-  UsersRoute: UsersRouteWithChildren,
+  UsersRoute: UsersRoute,
   WalletConnectRoute: WalletConnectRoute,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
 }
@@ -486,11 +438,7 @@ export const routeTree = rootRoute
       "filePath": "redirect.tsx"
     },
     "/users": {
-      "filePath": "users.tsx",
-      "children": [
-        "/users/$userId",
-        "/users/"
-      ]
+      "filePath": "users.tsx"
     },
     "/wallet-connect": {
       "filePath": "wallet-connect.tsx"
@@ -507,17 +455,9 @@ export const routeTree = rootRoute
       "filePath": "posts.$postId.tsx",
       "parent": "/posts"
     },
-    "/users/$userId": {
-      "filePath": "users.$userId.tsx",
-      "parent": "/users"
-    },
     "/posts/": {
       "filePath": "posts.index.tsx",
       "parent": "/posts"
-    },
-    "/users/": {
-      "filePath": "users.index.tsx",
-      "parent": "/users"
     },
     "/_layout/_layout-2/layout-a": {
       "filePath": "_layout/_layout-2/layout-a.tsx",
