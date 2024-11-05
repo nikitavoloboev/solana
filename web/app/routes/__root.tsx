@@ -19,7 +19,12 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react"
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base"
-import { UnsafeBurnerWalletAdapter } from "@solana/wallet-adapter-wallets"
+import {
+  PhantomWalletAdapter,
+  SolflareWalletAdapter,
+  TorusWalletAdapter,
+  UnsafeBurnerWalletAdapter,
+} from "@solana/wallet-adapter-wallets"
 import {
   WalletModalProvider,
   WalletDisconnectButton,
@@ -82,41 +87,28 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
-  const network = WalletAdapterNetwork.Devnet
-
-  // You can also provide a custom RPC endpoint.
+  const network = WalletAdapterNetwork.Mainnet
   const endpoint = useMemo(() => clusterApiUrl(network), [network])
 
   const wallets = useMemo(
     () => [
-      /**
-       * Wallets that implement either of these standards will be available automatically.
-       *
-       *   - Solana Mobile Stack Mobile Wallet Adapter Protocol
-       *     (https://github.com/solana-mobile/mobile-wallet-adapter)
-       *   - Solana Wallet Standard
-       *     (https://github.com/anza-xyz/wallet-standard)
-       *
-       * If you wish to support a wallet that supports neither of those standards,
-       * instantiate its legacy wallet adapter here. Common legacy adapters can be found
-       * in the npm package `@solana/wallet-adapter-wallets`.
-       */
-      new UnsafeBurnerWalletAdapter(),
+      new PhantomWalletAdapter(),
+      new SolflareWalletAdapter(),
+      new TorusWalletAdapter(),
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [network],
+    [],
   )
 
   return (
     <RootDocument>
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets} autoConnect>
+          <WalletModalProvider>
+            <Outlet />
+          </WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
       {/* TODO: commenting for now as trying to integrate https://github.com/jup-ag/terminal as wallet connect */}
-      {/* <ConnectionProvider endpoint={endpoint}> */}
-      {/* <WalletProvider wallets={wallets} autoConnect> */}
-      {/* <WalletMultiButton />
-          <WalletDisconnectButton /> */}
-      <Outlet />
-      {/* </WalletProvider> */}
-      {/* </ConnectionProvider> */}
     </RootDocument>
   )
 }
@@ -128,22 +120,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Meta />
       </Head>
       <Body>
-        <div className="p-2 flex gap-2 text-lg">
-          <Link
-            to="/"
-            activeProps={{
-              className: "font-bold",
-            }}
-            activeOptions={{ exact: true }}
-          >
-            Home
-          </Link>{" "}
-        </div>
-        <hr />
         {children}
-        <ScrollRestoration />
+        {/* <ScrollRestoration />
         <TanStackRouterDevtools position="bottom-right" />
-        <ReactQueryDevtools buttonPosition="bottom-left" />
+        <ReactQueryDevtools buttonPosition="bottom-left" /> */}
         <Scripts />
       </Body>
     </Html>
