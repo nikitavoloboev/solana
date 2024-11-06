@@ -2,7 +2,6 @@ import React, { useMemo } from "react"
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base"
 import { useWallet } from "@solana/wallet-adapter-react"
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
-import "@solana/wallet-adapter-react-ui/styles.css"
 
 // Wallet connector component
 export const SolanaWalletButton = () => {
