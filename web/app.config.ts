@@ -8,10 +8,6 @@ export default defineConfig({
         projects: ["./tsconfig.json"],
       }),
     ],
-    css: {
-      modules: {
-        localsConvention: "camelCase",
-      },
-    },
   },
 })
+//

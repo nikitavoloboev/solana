@@ -19,6 +19,7 @@ import { NotFound } from "~/components/NotFound"
 // @ts-expect-error
 import appCss from "~/styles/app.css?url"
 import { seo } from "~/utils/seo"
+import "@solana/wallet-adapter-react-ui/styles.css"
 
 import { useMemo } from "react"
 
