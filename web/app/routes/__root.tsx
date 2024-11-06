@@ -20,8 +20,6 @@ import { NotFound } from "~/components/NotFound"
 import appCss from "~/styles/app.css?url"
 import { seo } from "~/utils/seo"
 
-// Default styles that can be overridden by your app
-import "@solana/wallet-adapter-react-ui/styles.css"
 import { useMemo } from "react"
 
 export const Route = createRootRouteWithContext<{
