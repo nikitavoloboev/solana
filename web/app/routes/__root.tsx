@@ -95,7 +95,6 @@ function RootComponent() {
           </WalletModalProvider>
         </WalletProvider>
       </ConnectionProvider>
-      {/* TODO: commenting for now as trying to integrate https://github.com/jup-ag/terminal as wallet connect */}
     </RootDocument>
   )
 }
