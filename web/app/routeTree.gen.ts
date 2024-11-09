@@ -18,6 +18,7 @@ import { Route as DeferredImport } from './routes/deferred'
 import { Route as CoinImport } from './routes/coin'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as IndexImport } from './routes/index'
+import { Route as TrySolanaConnectImport } from './routes/try/solana-connect'
 import { Route as LayoutLayout2Import } from './routes/_layout/_layout-2'
 import { Route as LayoutLayout2LayoutBImport } from './routes/_layout/_layout-2/layout-b'
 import { Route as LayoutLayout2LayoutAImport } from './routes/_layout/_layout-2/layout-a'
@@ -56,6 +57,11 @@ const LayoutRoute = LayoutImport.update({
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TrySolanaConnectRoute = TrySolanaConnectImport.update({
+  path: '/try/solana-connect',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -134,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLayout2Import
       parentRoute: typeof LayoutImport
     }
+    '/try/solana-connect': {
+      id: '/try/solana-connect'
+      path: '/try/solana-connect'
+      fullPath: '/try/solana-connect'
+      preLoaderRoute: typeof TrySolanaConnectImport
+      parentRoute: typeof rootRoute
+    }
     '/_layout/_layout-2/layout-a': {
       id: '/_layout/_layout-2/layout-a'
       path: '/layout-a'
@@ -186,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/multi-tx': typeof MultiTxRoute
   '/redirect': typeof RedirectRoute
   '/wallet-connect': typeof WalletConnectRoute
+  '/try/solana-connect': typeof TrySolanaConnectRoute
   '/layout-a': typeof LayoutLayout2LayoutARoute
   '/layout-b': typeof LayoutLayout2LayoutBRoute
 }
@@ -198,6 +212,7 @@ export interface FileRoutesByTo {
   '/multi-tx': typeof MultiTxRoute
   '/redirect': typeof RedirectRoute
   '/wallet-connect': typeof WalletConnectRoute
+  '/try/solana-connect': typeof TrySolanaConnectRoute
   '/layout-a': typeof LayoutLayout2LayoutARoute
   '/layout-b': typeof LayoutLayout2LayoutBRoute
 }
@@ -212,6 +227,7 @@ export interface FileRoutesById {
   '/redirect': typeof RedirectRoute
   '/wallet-connect': typeof WalletConnectRoute
   '/_layout/_layout-2': typeof LayoutLayout2RouteWithChildren
+  '/try/solana-connect': typeof TrySolanaConnectRoute
   '/_layout/_layout-2/layout-a': typeof LayoutLayout2LayoutARoute
   '/_layout/_layout-2/layout-b': typeof LayoutLayout2LayoutBRoute
 }
@@ -226,6 +242,7 @@ export interface FileRouteTypes {
     | '/multi-tx'
     | '/redirect'
     | '/wallet-connect'
+    | '/try/solana-connect'
     | '/layout-a'
     | '/layout-b'
   fileRoutesByTo: FileRoutesByTo
@@ -237,6 +254,7 @@ export interface FileRouteTypes {
     | '/multi-tx'
     | '/redirect'
     | '/wallet-connect'
+    | '/try/solana-connect'
     | '/layout-a'
     | '/layout-b'
   id:
@@ -249,6 +267,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/wallet-connect'
     | '/_layout/_layout-2'
+    | '/try/solana-connect'
     | '/_layout/_layout-2/layout-a'
     | '/_layout/_layout-2/layout-b'
   fileRoutesById: FileRoutesById
@@ -262,6 +281,7 @@ export interface RootRouteChildren {
   MultiTxRoute: typeof MultiTxRoute
   RedirectRoute: typeof RedirectRoute
   WalletConnectRoute: typeof WalletConnectRoute
+  TrySolanaConnectRoute: typeof TrySolanaConnectRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -272,6 +292,7 @@ const rootRouteChildren: RootRouteChildren = {
   MultiTxRoute: MultiTxRoute,
   RedirectRoute: RedirectRoute,
   WalletConnectRoute: WalletConnectRoute,
+  TrySolanaConnectRoute: TrySolanaConnectRoute,
 }
 
 export const routeTree = rootRoute
@@ -292,7 +313,8 @@ export const routeTree = rootRoute
         "/deferred",
         "/multi-tx",
         "/redirect",
-        "/wallet-connect"
+        "/wallet-connect",
+        "/try/solana-connect"
       ]
     },
     "/": {
@@ -326,6 +348,9 @@ export const routeTree = rootRoute
         "/_layout/_layout-2/layout-a",
         "/_layout/_layout-2/layout-b"
       ]
+    },
+    "/try/solana-connect": {
+      "filePath": "try/solana-connect.tsx"
     },
     "/_layout/_layout-2/layout-a": {
       "filePath": "_layout/_layout-2/layout-a.tsx",

@@ -60,7 +60,13 @@ function RouteComponent() {
 
             // const address = fetchRandomAddresses() => 5 addresses
 
-            const addresses = ["", "", "", "", ""]
+            const addresses = [
+              "6SEg4Exnk9fgaw8krTPGDBJt6gFRNnipPni2odh66bq8", // has 1611$
+              "E57kivv4wcptYTas5aTKQb82sGvipBY5GUQZn4GPzgFT",
+              "H2ANeJWUYUSkrLbhRq4VBf2nSmjCBk9tP7WNBFFN7J64",
+              "9fyd39ENpTdF6fjJ3CBURsuKANFy2Yw7RvB2mihZkzbS",
+              "76XTHj6puju8vkPjN3tZZHBHKMSSCJD2prvTTMUsCJY2",
+            ]
 
             // Solana devnet connection
             const connection = new Connection("https://api.devnet.solana.com")
