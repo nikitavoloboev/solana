@@ -61,7 +61,7 @@ function RouteComponent() {
             // const address = fetchRandomAddresses() => 5 addresses
 
             const addresses = [
-              "6SEg4Exnk9fgaw8krTPGDBJt6gFRNnipPni2odh66bq8", // has 1611$
+              "6SEg4Exnk9fgaw8krTPGDBJt6gFRNnipPni2odh66bq8",
               "E57kivv4wcptYTas5aTKQb82sGvipBY5GUQZn4GPzgFT",
               "H2ANeJWUYUSkrLbhRq4VBf2nSmjCBk9tP7WNBFFN7J64",
               "9fyd39ENpTdF6fjJ3CBURsuKANFy2Yw7RvB2mihZkzbS",
