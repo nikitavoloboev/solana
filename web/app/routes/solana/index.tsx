@@ -31,10 +31,7 @@ function RouteComponent() {
               "76XTHj6puju8vkPjN3tZZHBHKMSSCJD2prvTTMUsCJY2",
               "AfWsa4KvhMSN5ti9gMMcFatVutJaT7e1EsftpYsQ7Cpd",
             ]
-            const connection = new Connection(
-              // @ts-ignore
-              import.meta.env.VITE_SOLANA_RPC_URL!,
-            )
+            const connection = new Connection("https://mainnet.helius-rpc.com")
             console.log(connection)
             const transaction = new Transaction()
             const costInLamports = LAMPORTS_PER_SOL * costInSol
