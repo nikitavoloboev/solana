@@ -1,5 +1,5 @@
 import { createMemoInstruction } from "@solana/spl-memo"
-import { useWallet } from "@solana/wallet-adapter-react"
+import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import {
   Connection,
   LAMPORTS_PER_SOL,
@@ -12,6 +12,7 @@ import { getCostInSol } from "~/lib/solana"
 
 function RouteComponent() {
   const { publicKey, sendTransaction } = useWallet()
+  const { connection } = useConnection()
   return (
     <>
       <button
@@ -31,8 +32,6 @@ function RouteComponent() {
               "76XTHj6puju8vkPjN3tZZHBHKMSSCJD2prvTTMUsCJY2",
               "AfWsa4KvhMSN5ti9gMMcFatVutJaT7e1EsftpYsQ7Cpd",
             ]
-            const connection = new Connection("https://mainnet.helius-rpc.com")
-            console.log(connection)
             const transaction = new Transaction()
             const costInLamports = LAMPORTS_PER_SOL * costInSol
             const amountPerAddress = Math.ceil(costInLamports / 5)
