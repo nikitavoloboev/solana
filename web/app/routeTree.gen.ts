@@ -17,7 +17,9 @@ import { Route as MultiTxImport } from './routes/multi-tx'
 import { Route as DeferredImport } from './routes/deferred'
 import { Route as CoinImport } from './routes/coin'
 import { Route as LayoutImport } from './routes/_layout'
+import { Route as SolanaRouteImport } from './routes/solana/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as SolanaIndexImport } from './routes/solana/index'
 import { Route as TrySolanaConnectImport } from './routes/try/solana-connect'
 import { Route as LayoutLayout2Import } from './routes/_layout/_layout-2'
 import { Route as LayoutLayout2LayoutBImport } from './routes/_layout/_layout-2/layout-b'
@@ -55,9 +57,19 @@ const LayoutRoute = LayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SolanaRouteRoute = SolanaRouteImport.update({
+  path: '/solana',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const SolanaIndexRoute = SolanaIndexImport.update({
+  path: '/',
+  getParentRoute: () => SolanaRouteRoute,
 } as any)
 
 const TrySolanaConnectRoute = TrySolanaConnectImport.update({
@@ -89,6 +101,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/solana': {
+      id: '/solana'
+      path: '/solana'
+      fullPath: '/solana'
+      preLoaderRoute: typeof SolanaRouteImport
       parentRoute: typeof rootRoute
     }
     '/_layout': {
@@ -147,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrySolanaConnectImport
       parentRoute: typeof rootRoute
     }
+    '/solana/': {
+      id: '/solana/'
+      path: '/'
+      fullPath: '/solana/'
+      preLoaderRoute: typeof SolanaIndexImport
+      parentRoute: typeof SolanaRouteImport
+    }
     '/_layout/_layout-2/layout-a': {
       id: '/_layout/_layout-2/layout-a'
       path: '/layout-a'
@@ -165,6 +191,18 @@ declare module '@tanstack/react-router' {
 }
 
 // Create and export the route tree
+
+interface SolanaRouteRouteChildren {
+  SolanaIndexRoute: typeof SolanaIndexRoute
+}
+
+const SolanaRouteRouteChildren: SolanaRouteRouteChildren = {
+  SolanaIndexRoute: SolanaIndexRoute,
+}
+
+const SolanaRouteRouteWithChildren = SolanaRouteRoute._addFileChildren(
+  SolanaRouteRouteChildren,
+)
 
 interface LayoutLayout2RouteChildren {
   LayoutLayout2LayoutARoute: typeof LayoutLayout2LayoutARoute
@@ -193,6 +231,7 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/solana': typeof SolanaRouteRouteWithChildren
   '': typeof LayoutLayout2RouteWithChildren
   '/coin': typeof CoinRoute
   '/deferred': typeof DeferredRoute
@@ -200,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/redirect': typeof RedirectRoute
   '/wallet-connect': typeof WalletConnectRoute
   '/try/solana-connect': typeof TrySolanaConnectRoute
+  '/solana/': typeof SolanaIndexRoute
   '/layout-a': typeof LayoutLayout2LayoutARoute
   '/layout-b': typeof LayoutLayout2LayoutBRoute
 }
@@ -213,6 +253,7 @@ export interface FileRoutesByTo {
   '/redirect': typeof RedirectRoute
   '/wallet-connect': typeof WalletConnectRoute
   '/try/solana-connect': typeof TrySolanaConnectRoute
+  '/solana': typeof SolanaIndexRoute
   '/layout-a': typeof LayoutLayout2LayoutARoute
   '/layout-b': typeof LayoutLayout2LayoutBRoute
 }
@@ -220,6 +261,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/solana': typeof SolanaRouteRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/coin': typeof CoinRoute
   '/deferred': typeof DeferredRoute
@@ -228,6 +270,7 @@ export interface FileRoutesById {
   '/wallet-connect': typeof WalletConnectRoute
   '/_layout/_layout-2': typeof LayoutLayout2RouteWithChildren
   '/try/solana-connect': typeof TrySolanaConnectRoute
+  '/solana/': typeof SolanaIndexRoute
   '/_layout/_layout-2/layout-a': typeof LayoutLayout2LayoutARoute
   '/_layout/_layout-2/layout-b': typeof LayoutLayout2LayoutBRoute
 }
@@ -236,6 +279,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/solana'
     | ''
     | '/coin'
     | '/deferred'
@@ -243,6 +287,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/wallet-connect'
     | '/try/solana-connect'
+    | '/solana/'
     | '/layout-a'
     | '/layout-b'
   fileRoutesByTo: FileRoutesByTo
@@ -255,11 +300,13 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/wallet-connect'
     | '/try/solana-connect'
+    | '/solana'
     | '/layout-a'
     | '/layout-b'
   id:
     | '__root__'
     | '/'
+    | '/solana'
     | '/_layout'
     | '/coin'
     | '/deferred'
@@ -268,6 +315,7 @@ export interface FileRouteTypes {
     | '/wallet-connect'
     | '/_layout/_layout-2'
     | '/try/solana-connect'
+    | '/solana/'
     | '/_layout/_layout-2/layout-a'
     | '/_layout/_layout-2/layout-b'
   fileRoutesById: FileRoutesById
@@ -275,6 +323,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SolanaRouteRoute: typeof SolanaRouteRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
   CoinRoute: typeof CoinRoute
   DeferredRoute: typeof DeferredRoute
@@ -286,6 +335,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SolanaRouteRoute: SolanaRouteRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
   CoinRoute: CoinRoute,
   DeferredRoute: DeferredRoute,
@@ -308,6 +358,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/solana",
         "/_layout",
         "/coin",
         "/deferred",
@@ -319,6 +370,12 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/solana": {
+      "filePath": "solana/route.tsx",
+      "children": [
+        "/solana/"
+      ]
     },
     "/_layout": {
       "filePath": "_layout.tsx",
@@ -351,6 +408,10 @@ export const routeTree = rootRoute
     },
     "/try/solana-connect": {
       "filePath": "try/solana-connect.tsx"
+    },
+    "/solana/": {
+      "filePath": "solana/index.tsx",
+      "parent": "/solana"
     },
     "/_layout/_layout-2/layout-a": {
       "filePath": "_layout/_layout-2/layout-a.tsx",
