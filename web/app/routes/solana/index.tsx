@@ -1,7 +1,6 @@
 import { createMemoInstruction } from "@solana/spl-memo"
 import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import {
-  Connection,
   LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
@@ -46,8 +45,8 @@ function RouteComponent() {
                 }),
               )
             }
-            const tx = await sendTransaction(transaction, connection)
-            console.log("Transaction confirmed:", tx)
+            // const tx = await sendTransaction(transaction, connection)
+            // console.log("Transaction confirmed:", tx)
           } catch (err) {
             console.log(err, "err")
           }
@@ -60,5 +59,5 @@ function RouteComponent() {
 }
 
 export const Route = createFileRoute("/solana/")({
-  component: () => <div>Hello /solana/!</div>,
+  component: () => RouteComponent,
 })
