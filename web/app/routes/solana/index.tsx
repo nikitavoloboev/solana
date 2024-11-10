@@ -22,7 +22,6 @@ function RouteComponent() {
           try {
             const costInUsd = 5
             const costInSol = await getCostInSol(costInUsd)
-            // TODO: prevent this from happening
             if (!costInSol) return
             console.log(costInSol)
             const addresses = [
