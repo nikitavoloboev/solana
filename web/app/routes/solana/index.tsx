@@ -59,5 +59,5 @@ function RouteComponent() {
 }
 
 export const Route = createFileRoute("/solana/")({
-  component: () => RouteComponent,
+  component: () => <RouteComponent />,
 })
