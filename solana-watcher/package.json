@@ -1,7 +1,0 @@
-{
-  "name": "worker",
-  "dependencies": {},
-  "prettier": {
-    "semi": false
-  }
-}
