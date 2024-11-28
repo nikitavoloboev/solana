@@ -1,5 +1,3 @@
 # [Solana](https://solana.nikiv.dev)
 
-## Web
-
-See [web](web).
+See [web](web) for how to run website.
